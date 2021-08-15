@@ -30,16 +30,28 @@ const router = Router();
 
 router.get('/', (req, res) => {
   if (req.query.username) {
-    return res.json(
-      tweets.filter((tweet) => tweet.username == req.query.username)
+    const filteredTweets = tweets.filter(
+      (tweet) => tweet.username == req.query.username
     );
+
+    if (filteredTweets.length == 0) {
+      return res.status(404).send('Data is not exist!');
+    }
+
+    return res.json(filteredTweets);
   }
 
   res.json(tweets);
 });
 
 router.get('/:id', (req, res) => {
-  res.json(tweets.find((tweet) => tweet.id == req.params.id));
+  const tweet = tweets.find((tweet) => tweet.id == req.params.id);
+
+  if (!tweet) {
+    return res.status(404).send('Data is not exist!');
+  }
+
+  res.json(tweet);
 });
 
 router.post('/', (req, res) => {
@@ -52,6 +64,10 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const tweet = tweets.find((tweet) => tweet.id == req.params.id);
 
+  if (!tweet) {
+    return res.status(404).send('Data is not exist!');
+  }
+
   tweet.text = req.body.text;
 
   res.json(tweet);
@@ -59,6 +75,11 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const tweet = tweets.find((tweet) => tweet.id == req.params.id);
+
+  if (!tweet) {
+    return res.status(404).send('Data is not exist!');
+  }
+
   const tweetIndex = tweets.indexOf(tweet);
   tweets.splice(tweetIndex, 1);
 
