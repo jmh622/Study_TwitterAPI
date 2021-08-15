@@ -1,7 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import tweetsRouter from './router/tweetsRouter.js';
+import tweetsRouter from './router/tweets.js';
 import morgan from 'morgan';
 import 'express-async-errors';
 
