@@ -1,17 +1,34 @@
-import { Router } from 'express';
-import tweetsController from '../Controller/tweets.js';
-import tweetValidation from '../Validation/tweets.js';
+import express from 'express';
+import 'express-async-errors';
+import { body } from 'express-validator';
+import * as tweetController from '../controller/tweet.js';
+import { isAuth } from '../middleware/auth.js';
+import { validate } from '../middleware/validator.js';
 
-const router = Router();
+const router = express.Router();
 
-router.get('/', tweetsController.getAll);
+const validateTweet = [
+  body('text')
+    .trim()
+    .isLength({ min: 3 })
+    .withMessage('text should be at least 3 characters'),
+  validate,
+];
 
-router.get('/:id', tweetsController.getById);
+// GET /tweet
+// GET /tweets?username=:username
+router.get('/', isAuth, tweetController.getTweets);
 
-router.post('/', tweetValidation.create, tweetsController.create);
+// GET /tweets/:id
+router.get('/:id', isAuth, tweetController.getTweet);
 
-router.put('/:id', tweetValidation.update, tweetsController.update);
+// POST /tweeets
+router.post('/', isAuth, validateTweet, tweetController.createTweet);
 
-router.delete('/:id', tweetValidation.delete, tweetsController.delete);
+// PUT /tweets/:id
+router.put('/:id', isAuth, validateTweet, tweetController.updateTweet);
+
+// DELETE /tweets/:id
+router.delete('/:id', isAuth, tweetController.deleteTweet);
 
 export default router;
