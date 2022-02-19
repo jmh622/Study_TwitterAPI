@@ -24,6 +24,9 @@ export const config = {
     port: parseInt(required('HOST_PORT', 8080)),
   },
   db: {
+    // MongoDB 용
+    connectionString: required('DB_CONNECTION_STRING'),
+    // Mysql 용
     host: required('DB_HOST'),
     database: required('DB_DATABASE'),
     user: required('DB_USER'),
