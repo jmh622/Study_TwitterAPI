@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(cors({ ogirin: config.cors.allowedOrigin, optionsSuccessStatus: 200 }));
 app.use(morgan('tiny'));
 
 app.use('/tweets', tweetsRouter);
@@ -31,15 +31,15 @@ app.use((error, req, res, next) => {
 
 connectDB()
   .then(() => {
-    const server = app.listen(config.host.port);
-
+    console.log(`Server is started... ${new Date()}`);
+    const server = app.listen(config.port);
     initSocket(server);
   })
   .catch(console.error);
 
 // Sequelize
 // sequelize.sync().then((sequelize) => {
-//   const server = app.listen(config.host.port);
+//   const server = app.listen(config.port);
 
 //   initSocket(server);
 // });

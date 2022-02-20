@@ -7,3 +7,4 @@ Dwitter API 만들기.
 - NodeJS, ExpressJS
 - Mysql, Sequelize
 - MongoDB, Mongoose
+- Soket.io
