@@ -1,3 +1,9 @@
-# DreamCoding Tweeter API 만들기
+# DreamCoding NodeJS 강의 소스파일
 
-NodeJS, ExpressJS를 이용하여 Tweeter API를 만듭니다.
+Dwitter API 만들기.
+
+## Skills
+
+- NodeJS, ExpressJS
+- Mysql, Sequelize
+- MongoDB, Mongoose
